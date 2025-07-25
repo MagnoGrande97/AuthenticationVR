@@ -12,14 +12,14 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.post('/guardar-usuario', async (req, res) => {
   try {
-    const { email, nombre, sub } = req.body;
-    if (!email || !nombre || !sub) {
+    const { email, nombre, uID } = req.body;
+    if (!email || !nombre || !uID) {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
-    let usuario = await Usuario.findOne({ sub });
+    let usuario = await Usuario.findOne({ uID });
     if (!usuario) {
-      usuario = new Usuario({ nombre, email, sub });
+      usuario = new Usuario({ nombre, email, uID });
       await usuario.save();
     }
 
