@@ -1,0 +1,14 @@
+{
+  "name": "api-mongo-usuarios",
+  "version": "1.0.0",
+  "description": "API para guardar usuarios en MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0"
+  }
+}
