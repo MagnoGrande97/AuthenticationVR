@@ -17,7 +17,7 @@ app.post('/guardar-usuario', async (req, res) => {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
-    let usuario = await Usuario.findOne({ uid });
+    let usuario = await Usuario.findOne({ sub });
     if (!usuario) {
       usuario = new Usuario({ nombre, email, sub });
       await usuario.save();
