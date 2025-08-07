@@ -12,23 +12,23 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.post('/guardar-usuario', async (req, res) => {
   try {
-    console.log("Cuerpo recibido:", req.body); // 👈 Nuevo log
+    console.log("Cuerpo recibido:", req.body);
 
-    const { email, nombre, uID } = req.body;
+    const { email, nombre, uID, telefono = null, rol = null } = req.body;
+
     if (!email || !nombre || !uID) {
-      console.log("Faltan campos"); // 👈 log adicional
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
     let usuario = await Usuario.findOne({ uID });
     if (!usuario) {
-      usuario = new Usuario({ nombre, email, uID });
+      usuario = new Usuario({ nombre, email, uID, telefono, rol });
       await usuario.save();
     }
 
     res.json(usuario);
   } catch (error) {
-    console.error("Error en /guardar-usuario:", error); // 👈 log del error real
+    console.error("Error en /guardar-usuario:", error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
