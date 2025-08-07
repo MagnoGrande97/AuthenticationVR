@@ -20,16 +20,26 @@ app.post('/guardar-usuario', async (req, res) => {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
-    let usuario = await Usuario.findOne({ uID });
+    // Buscar por uid (minúscula)
+    let usuario = await Usuario.findOne({ uid: uID });
+
     if (!usuario) {
-      usuario = new Usuario({ nombre, email, uID, telefono, rol });
+      // Crear el usuario correctamente
+      usuario = new Usuario({
+        nombre,
+        email,
+        uid: uID,       // 👈 CORREGIDO aquí
+        telefono,
+        rol
+      });
+
       await usuario.save();
     }
 
     res.json(usuario);
   } catch (error) {
     console.error("Error en /guardar-usuario:", error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ error: error.message }); // para debug más claro
   }
 });
 
